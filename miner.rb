@@ -7,11 +7,11 @@ LOGINS = logins.split("\n").map do |lg|
 end
 
 WORKERS = [
-  { name: :mkvdeb, command: "/home/makevoid/apps/cpuminer/minerd", threads: 8 },
-  { name: :mkvmini, command: "ssh root@mkvmini.local /home/makevoid/apps/cpuminer/minerd", threads: 4 }, # need to change psu to go to 8
+  # { name: :mkvdeb, command: "/home/makevoid/apps/cpuminer/minerd", threads: 7 },
+  #{ name: :mkvmini, command: "ssh root@mkvmini.local /home/makevoid/apps/cpuminer/minerd", threads: 5 }, # need to change psu to go to 8
   { name: :makevoid_com, command: "ssh root@makevoid.com /root/servtools/bin/minerd", threads: 2 }, # supports 8
   { name: :lap,   command: "ssh root@lap.local /home/makevoid/Sites/servtools/bin/minerd", threads: 2 },
-  { name: :mbo,   command: "ssh root@mbo.mkvd.net /root/servtools/bin/minerd", threads: 2 },
+  # { name: :mbo,   command: "ssh root@mbo.mkvd.net /root/servtools/bin/minerd", threads: 2 },
   { name: :taxi,  command: "ssh root@taxi.mkvd.net /root/servtools/bin/minerd", threads: 2 },
   # { name: :air,   command: "ssh root@mkvair.local /Users/makevoid/Sites/servtools/bin/minerd_osx", threads: 2 },
   #{ name: :cafp,  command: "ssh root@cafp.mkvd.net /root/servtools/bin/minerd", threads: 1 }, # max 2
@@ -25,13 +25,20 @@ WORKERS.each_with_index do |worker, idx|
 end
 
 SERVERS = [
-  { name: :ltc_coin_pool_org, address: "stratum+tcp://ltc.coin-pool.org:3333", currency: :LTC },
-  { name: :dgc_d2_cc, address: "stratum+tcp://pool.d2.cc:3336", currency: :DGC },
-  { name: :dgc_hash_so, address: "stratum+tcp://dgc.hash.so:3341", currency: :DGC },
+  # LTC
+  #{ name: :ltc_coin_pool_org, address: "stratum+tcp://ltc.coin-pool.org:3333", currency: :LTC }, # 0.something coins disappeared, contacted support and stopped mining
+
+  { name: :wemineltc_com, address: "stratum+tcp://gigahash.wemineltc.com:3334", currency: :LTC }, # https://wemineltc.com
+
+  # DGC
+  { name: :dgc_d2_cc, address: "stratum+tcp://pool.d2.cc:3336", currency: :DGC }, # https://dgc.d2.cc/
+  { name: :dgc_hash_so, address: "stratum+tcp://dgc.hash.so:3341", currency: :DGC }, # https://dgc.hash.so
+
+  # PTS
   { name: :pts_ypool_net, address: "http://ypool.net:8080", currency: :PTS }, # ports 8080, 8081, 8082, 8083, 8084, 8085, 8086, 8087, 10034
 ]
 
-@server = SERVERS[1]
+@server = SERVERS[0]
 
 STDOUT.sync = true
 
