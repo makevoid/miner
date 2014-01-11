@@ -82,6 +82,12 @@ ypool: (working)
 ./jhprimeminer -o http://ypool.net:10034 -u makevoid.xpm1 -p final4 -m 31 -m2 37 -m3 41 -m4 47
 ./jhprimeminer -o http://ypool.net:10034 -u makevoid.xpm2 -p final6 -m 31 -m2 37 -m3 41 -m4 47
 
+
+virtuo:
+
+    ./jhprimeminer -o http://ypool.net:10034 -u virtuoid.xpm1 -p antani1 -m 31 -m2 37 -m3 41 -m4 47 
+
+
 other options:
 
  -m 61 -target 9 -bttarget 9

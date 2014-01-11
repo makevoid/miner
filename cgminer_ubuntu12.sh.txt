@@ -1,0 +1,107 @@
+# https://bitcointalk.org/index.php?topic=189499.0
+
+#CGMiner
+#Install server 12.04
+#configure networking for static IP and DNS
+#user miner
+######################
+sudo -s
+######################
+apt-get -y remove --purge nvidia-common nvidia-current nvidia-opencl-dev nvidia-settings
+apt-get -y update
+apt-get -y upgrade
+apt-get -y install xubuntu-desktop
+reboot
+######################
+sudo -s
+######################
+apt-get -y install build-essential git-core unzip cmake automake libncurses5-dev autoconf libcurl4-openssl-dev pkg-config automake yasm
+apt-get -y autoremove
+exit
+#####################
+#I store these and transfer with SCP, you'll have to download them.
+#DOWNLOAD ADL: ADL_SDK_5.0.zip
+#DOWNLOAD AMD-APP-SDK AMD-APP-SDK-v2.8-lnx64.tgz
+#CREDIT: http://rdmsnippets.com/2013/03/20/bitcoin-mining-with-ubuntu-12-04-tls-and-cgminer/
+#APP http://developer.amd.com/tools/heterogeneous-computing/amd-accelerated-parallel-processing-app-sdk/#one
+#http://developer.amd.com/tools/heterogeneous-computing/amd-accelerated-parallel-processing-app-sdk/downloads/#one
+######################
+cd
+git clone git://github.com/ckolivas/cgminer.git cgminer
+mkdir ADL_SDK
+cd ADL_SDK
+cp ~/ADL_SDK_5.0.zip .
+unzip -o ADL_SDK_5.0.zip
+cp include/* ~/cgminer/ADL_SDK
+###################
+sudo -s
+###################
+cd /opt
+tar xf /home/miner/AMD-APP-SDK-v2.8-lnx64.tgz
+cd /opt/
+./Install-AMD-APP.sh
+ldconfig
+reboot
+###################
+sudo -s
+###################
+#Choose your standard, experimental, etc drivers
+#apt-cache search fglrx will give a list
+apt-get install fglrx
+#Set machine to autologin to xserver
+cat > /etc/lightdm/lightdm.conf << EOF
+[SeatDefaults]
+autologin-user=miner
+autologin-user-timeout=0
+user-session=xubuntu
+greeter-session=lightdm-gtk-greeter
+EOF
+# You can use the newest AMD non-ubuntu packaged drivers as well
+#http://support.amd.com/us/gpudownload/linux/Pages/radeon_linux.aspx
+#wget http://www2.ati.com/drivers/linux/amd-catalyst-13.4-linux-x86.x86_64.zip
+#unzip -o amd-catalyst-13.4-linux-x86.x86_64.zip
+#sh amd-catalyst-13.4-linux-x86.x86_64.run
+aticonfig --adapter=all -f --initial
+reboot
+######################
+export DISPLAY=:0
+aticonfig --list-adapters
+######################
+#STOP HERE
+#If you do not have adapters listed, you broke something.
+######################
+cd ~/cgminer
+git pull
+make clean
+./autogen.sh
+CFLAGS="-O2 -Wall -march=native -I /opt/AMDAPP/include/" LDFLAGS="-L/opt/AMDAPP/lib/x86_64" ./configure --enable-scrypt
+make
+###################
+#TEST YOUR CGMINER BUILD
+export DISPLAY=:0
+export GPU_USE_SYNC_OBJECTS=1
+export GPU_MAX_ALLOC_PERCENT=100
+export GPU_MAX_HEAP_SIZE=100
+/home/miner/cgminer/cgminer -n
+#If this doesn't spit out your device ID's something is wrong.
+###################
+sudo -s
+###################
+#Disable the screensaver
+sed 's/LOCK_SCREEN=true/LOCK_SCREEN=false/g' -i /etc/default/acpi-support
+###################
+#Generate a Base Config FIle
+cat > mine.sh << EOF
+API="--api-port 4028 --api-listen --api-allow 0/0"
+POOL="-o #YOURPOOL -u YOURUSER -p YOURWORKERPASS"
+GENERAL="--scrypt --no-submit-stale"
+CARD="--auto-fan --temp-target 82"
+WORK="--worksize 256 -I 13"
+export DISPLAY=:0
+export GPU_USE_SYNC_OBJECTS=1
+export GPU_MAX_ALLOC_PERCENT=100
+cd /home/miner/cgminer/
+screen -S miner /home/miner/cgminer/cgminer $API $POOL $GENERAL $CARD $WORK
+EOF
+chmod +x mine.sh
+###################
