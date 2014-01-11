@@ -51,13 +51,29 @@ http://www.coinwarz.com/cryptocurrency/?sha256HashRate=1000.00&sha256Power=500.0
 traders chart:
 http://bitcoincharts.com/charts/mtgoxUSD#rg60ztgSzm1g10zm2g25zv
 
-### primecoin (cpu)
+### primecoin [XPM]  (cpu)
 
 hw comparison!:
 http://anty.info/primecoin-hardware/
 
 pool
 http://rpool.net
+
+
+
+  ### primecoin miner
+
+  dependencies to run:
+
+      apt-get install build-essential libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev  -y
+
+  dependecies to compile:
+
+      apt-get install build-essential libboost-system-dev libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev zlib1g-dev yasm
+
+  copy pre-compiled binaries or:
+
+  manual install:
 
 miner
 https://github.com/hanxianzhai/jhPrimeminer-linux
@@ -81,7 +97,74 @@ https://bitcointalk.org/index.php?topic=264115.0
 articles:
 http://www.davidedicillo.com/developing/how-to-mine-primecoin-xpm-on-the-cloud/ (nice use of supervisord: http://supervisord.org/)
 
-### protoshares (cpu)
+other miners: http://azbowling.com/AeroCloud/
+
+
+### protoshares [PTS]  (cpu)
+
+mining on seflow [TODO: add screen]
+
+sshseflow ./ptsminer PeTzw2fHAiJvqouyNnhq2d4QktP3cpTUD2 8 29
+
+mining @ home
+
+./ptsminer PeTzw2fHAiJvqouyNnhq2d4QktP3cpTUD2 26
+
+
+  # ptsminer
+  clone: https://github.com/thbaumbach/ptsminer
+
+  cd ptsminer/src
+  make -f makefile.unix
+  ./ptsminer
+
+
+
+# ypool PTS
+
+download binary from ypool: ADDRESS
+
+
+edit yam.cfg:
+
+
+    threads = 8
+    mining-params = pts:m=2048
+    mine = xpt2://makevoid.3:3@mining.ypool.net:10034/pts
+    #proxy = socks4a://127.0.0.1:9150
+    compact-stats = 1
+
+
+execute binary version from ypool:
+
+
+   ./linux64ld-ivy-bridge/yam -c yam.cfg
+
+
+if you get a gllibc error:
+
+add to source list: vim /etc/apt/sources.list
+
+  deb http://ftp.debian.org/debian sid main
+
+then:
+
+  apt-get -t sid install libc6-amd64 libc6-dev libc6-dbg
+  apt-get update
+  apt-get upgrade
+
+
+# beer PTS
+
+cd
+./apps/ptsminer_beer/src/ptsminer PeTzw2fHAiJvqouyNnhq2d4QktP3cpTUD2 8 27
+
+/home/makevoid/apps/ptsminer_beer/src/ptsminer PeTzw2fHAiJvqouyNnhq2d4QktP3cpTUD2 8 27
+
+/home/makevoid/apps/ptsminer_beer/src/ptsminer PeTzw2fHAiJvqouyNnhq2d4QktP3cpTUD2 3 27
+----
+
+---
 
 infos: https://cryptocointalk.com/topic/1492-protoshares-pts-information/
 
@@ -92,14 +175,13 @@ qmake-qt4 -makefile protoshares-qt.pro
 make
 
 
-ptsminer:
-https://github.com/donSchoe/ptsminer
 
 https://bitcointalk.org/index.php?topic=325261.0
 
 pools:
 - http://pts.rpool.net/miner
 - beeeeer.org
+- ypool
 
 beeeeer.org mining pool:
 
@@ -119,6 +201,34 @@ yam:
 infos: cpm per cpu
 http://ypool-mining.wikia.com/wiki/JhProtominer_-_CPU_and_collisions/min
 
+
+jhprimeminer install:
+
+    cd ~/apps
+    apt-get install build-essential libssl-dev openssl git libgmp-dev
+    git clone https://github.com/tandyuk/jhPrimeminer.git
+    cd jhPrimeminer
+    make
+
+
+
+
+### dogecoin (DOGE)
+
+pools: https://fast-pool.com
+
+fav:
+https://doge.pool.pm
+doge.hashfaster.com
+http://teamdoge.com
+
+
+### setups (software)
+
+litecoin rig:
+https://litecoin.info/Debian_Linux_cryptocoin_mining_rig_setup_guide#Install_cgminer
+
+
 ### hardware
 
 mining gpu box: http://www.cryptobadger.com/2013/04/build-a-litecoin-mining-rig-hardware/
@@ -126,6 +236,8 @@ guide2 : http://www.coinminingrigs.com/how-to-build-a-6-gpu-mining-rig/
 
 
 cgminer binaries: https://github.com/kanoi/cgminer-binaries
+
+optimizations: http://dustin.io/2013/12/setting-up-litecoin-cgminer-with-latest-7970280x290x-hardware/
 
 mining hardware: https://litecoin.info/Mining_hardware_comparison
 
@@ -148,6 +260,22 @@ photos: https://ip.bitcointalk.org/?u=http%3A%2F%2Fs7.directupload.net%2Fimages%
 cards tomshw: http://www.tomshardware.com/reviews/gaming-graphics-card-review,3107.html
 
 
+
+PSU:
+
+guide
+http://www.directron.com/2powersupplies.html#addatx
+
+450W - 12V 16A
+vince http://www.prezzoforte.it/product_info.php?products_id=44713&from=trovaprezzi&id_link=f5aec836d836149b5c1eb9f5f81d5b15
+
+magari considerare anche:
+SSD 60GB 450MB/s : http://www.trovaprezzi.it/goto/114341111?impression=Vzl6eFN4eHZRNFNQTGN2VzI3UTE3VHozRmE5RHNVYWh5WjYxS2h2N2JtM0x4T0t6UjFaUXBRPT01&search=c3NkCTE0Mw2&l_pos=44
+
+nzomma
+http://www.prezzoforte.it/product_info.php?products_id=44716&from=trovaprezzi&id_link=f5aec836d836149b5c1eb9f5f81d5b15
+
+
 ### electricity:
 
 costo elettricita' kwh: http://taglialabolletta.it/quanto-costa-un-kwh/
@@ -162,6 +290,9 @@ https://github.com/jgarzik/pushpool
 
 mmcfe gui (php), also pool?
 https://github.com/GTRsdk/mmcFE
+
+php-mpos:
+https://github.com/TheSerapher/php-mpos
 
 # tips
 
@@ -195,6 +326,10 @@ xeon 16 threads http://www.ebay.it/sch/Processori-CPU-/164/i.html?_from=R40&_udl
 # pci riser cables
 
 ordered by aliexpress
+
+others: http://it.aliexpress.com/item/10pcs-LOT-NEW-Flex-Ribbon-PCI-Express-PCI-E-X1-Male-to-Female-Riser-1U-2U/610984788.html
+
+ladri: http://www.cablematic.it/prodotto/19-centimetri-cavo-di-prolunga-1X-scheda-PCIe-riser/
 
 # unrelated
 
