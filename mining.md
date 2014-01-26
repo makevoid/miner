@@ -51,6 +51,12 @@ http://www.coinwarz.com/cryptocurrency/?sha256HashRate=1000.00&sha256Power=500.0
 traders chart:
 http://bitcoincharts.com/charts/mtgoxUSD#rg60ztgSzm1g10zm2g25zv
 
+### Metiscoin [MTC] (cpu)
+
+xptminer - https://github.com/jh000/xptMiner
+todo: test on protoshares
+
+
 ### primecoin [XPM]  (cpu)
 
 hw comparison!:
@@ -85,7 +91,7 @@ ypool: (working)
 
 virtuo:
 
-    ./jhprimeminer -o http://ypool.net:10034 -u virtuoid.xpm1 -p antani1 -m 31 -m2 37 -m3 41 -m4 47 
+    ./jhprimeminer -o http://ypool.net:10034 -u virtuoid.xpm1 -p antani1 -m 31 -m2 37 -m3 41 -m4 47
 
 
 other options:
@@ -145,6 +151,11 @@ execute binary version from ypool:
 
 
    ./linux64ld-ivy-bridge/yam -c yam.cfg
+
+
+full path cmd:
+
+cd /home/makevoid/apps/ptsminer_ypool; ./linux64ld-ivy-bridge/yam -c yam.cfg
 
 
 if you get a gllibc error:
