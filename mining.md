@@ -53,7 +53,7 @@ http://bitcoincharts.com/charts/mtgoxUSD#rg60ztgSzm1g10zm2g25zv
 
 ### Metiscoin [MTC] (cpu)
 
-xptminer - https://github.com/jh000/xptMiner
+xptminer - https://github.com/conicek/xptminer-linux
 todo: test on protoshares
 
 
